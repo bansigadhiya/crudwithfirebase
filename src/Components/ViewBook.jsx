@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { GetSingleBook, ViewBookData } from '../Services/Actions/Book.action';
+import { DeleteBook, GetSingleBook, ViewBookData } from '../Services/Actions/Book.action';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Button } from 'react-bootstrap';
 import { PenFill, Trash3Fill } from 'react-bootstrap-icons';
@@ -14,6 +14,10 @@ function ViewBook() {
 
   const handleEdit = (id) => {
     dispatch(GetSingleBook(id))
+  }
+
+  const handleDelete = (id) => {
+    dispatch(DeleteBook(id))
   }
 
 
@@ -35,7 +39,7 @@ function ViewBook() {
                   </div>
                   <div>
                     <Button variant='info' className='me-3 text-white' onClick={() => {handleEdit(d.id)}}><PenFill /></Button>
-                    <Button variant='danger'><Trash3Fill /></Button>
+                    <Button variant='danger' onClick={() => {handleDelete(d.id)}}><Trash3Fill /></Button>
                   </div>
                 </ListGroup.Item>
               )

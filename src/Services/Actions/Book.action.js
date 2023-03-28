@@ -1,6 +1,6 @@
 import { ADD_BOOK_FAIL, ADD_BOOK_SUCCESS, GET_SINGLE_DATA_SUCCESS ,GET_SINGLE_DATA_FAIL, UPDATE_BOOK_SUCCESS, UPDATE_BOOK_FAIL} from "../Constants/Action.type";
 import { database } from "../../Firebase";
-import {get, ref, set,update} from 'firebase/database'
+import {get, ref, remove, set,update} from 'firebase/database'
 
 export const AddbookSuccess = (data) => {
     return{
@@ -85,12 +85,21 @@ export const GetSingleBook = (id) => {
 }
 
 export const UpdateBook = (data) => {
-    // console.log(data,"data");
     return dispatch => {
         update(ref(database,`/books/${data.id}/`),data).then(() => {
             dispatch(ViewBookData(data))
         }).catch((error) => {
             dispatch(UpdatebookFail(data))
+        })
+    }
+}
+
+export const DeleteBook = (id) => {
+    return dispatch => {
+        remove(ref(database,`/books/${id}`)).then(() => {
+            dispatch(ViewBookData())
+        }).catch((err) => {
+            console.log(err);
         })
     }
 }
